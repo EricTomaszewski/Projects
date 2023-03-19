@@ -20,12 +20,19 @@ def calculate():
 def calculate2():
     a = int(request.form['a'])
     b = int(request.form['b'])
-    # Call the external Python script and capture its output
+    
+    # EXTERNAL SCRIPT
+    # Call the external Python script and capture its multiplication output
     process = subprocess.Popen(['python', 'MultiplyABScript.py', str(a), str(b)], stdout=subprocess.PIPE)
     output_bytes = process.stdout.read()
     # Decode the byte string and format the result
     output = output_bytes.decode().strip()
-    return render_template('result.html', result=output)
+    
+    # INTERNAL FLASK
+    # and here the sum without using the script
+    output2 = a + b
+    
+    return render_template('result.html', result=[output,output2])
 
 
 if __name__ == '__main__':
