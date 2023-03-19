@@ -1,0 +1,6 @@
+Welcome to the world of NLP
+NLP is a fascinating field
+Natural Language Processing has many applications
+The more data you have, the better your NLP models will be
+Tokenization is the first step in NLP
+BPE is a popular tokenization method
