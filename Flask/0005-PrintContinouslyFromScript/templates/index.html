@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Calculator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!--    
+    <script>
+      $(document).ready(function() {
+        $("#calculate-form").submit(function(event) {
+          // Prevent the form from submitting and reloading the page
+          event.preventDefault();
+          // Send the form data as an AJAX request to the Flask server
+          $.ajax({
+            url: "/calculate",
+            method: "POST",
+            data: $(this).serialize(),
+            success: function(result) {
+              // Update the result div with the server response
+              $("#result").html(result);
+            }
+          });
+        });
+      });
+    </script>
+    -->
+    <script>
+      $(document).ready(function() {
+        // Calculate the result whenever the input fields change
+        $("input").on("input", function() {
+          $.ajax({
+            url: "/",
+            method: "POST",
+            data: $("#calculate-form").serialize(),
+            success: function(result) {
+              $("#result").html(result);
+            }
+          });
+        });
+      });
+    </script>  
+  </head>
+  <body>
+    <h1>Calculator</h1>
+    <form id="calculate-form">
+    <!-- previous code <form action="/calculate" method="post"> -->
+      <label for="a">First number:</label>
+      <input type="number" name="a" required>
+      <br>
+      <label for="b">Second number:</label>
+      <input type="number" name="b" required>
+      <br>
+    </form>
+    <div id="result"></div>
+  </body>
+</html>
