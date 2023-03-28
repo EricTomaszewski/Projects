@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Increment App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('form').on('submit', function(event) {
+          event.preventDefault();
+          var formData = $('form').serialize();
+          $.ajax({
+            url: '/increment',
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+              $('#results').append(response.number + '<br>');
+            }
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Increment App</h1>
+    <form>
+      <label for="a">Starting Value:</label>
+      <input type="number" id="a" name="a"><br>
+      <label for="b">Ending Value:</label>
+      <input type="number" id="b" name="b"><br>
+      <input type="submit" value="Submit">
+    </form>
+    <div id="results"></div>
+  </body>
+</html>
+
+
+
+
+
+<!--
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Incrementer</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Incrementer</h1>
+    <p>Enter two numbers:</p>
+    <input type="number" id="a" name="a">
+    <input type="number" id="b" name="b">
+    <br><br>
+    <p>Incremented values:</p>
+    <ul id="values"></ul>
+    <script>
+        function getValues() {
+            $.getJSON('/get_values', function(data) {
+                var values = data.a + ', ' + data.b;
+                $('#values').append('<li>' + values + '</li>');
+            });
+        }
+
+        setInterval(getValues, 1000);
+    </script>
+</body>
+</html>
+-->
+
+
+
+<!---
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-time data</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Real-time data</h1>
+    <form>
+        <label for="a">A:</label>
+        <input type="number" name="a" id="a">
+        <label for="b">B:</label>
+        <input type="number" name="b" id="b">
+        <input type="submit" value="Submit">
+    </form>
+    <div id="data"></div>
+    <script>
+        $(document).ready(function() {
+            $('form').submit(function(event) {
+                event.preventDefault();
+                var a = $('#a').val();
+                var b = $('#b').val();
+                var source = new EventSource('/data?a=' + a + '&b=' + b);
+                source.onmessage = function(event) {
+                    var data = JSON.parse(event.data);
+                    $('#data').append('<p>' + data.value + '</p>');
+                };
+            });
+        });
+    </script>
+</body>
+</html>
+-->

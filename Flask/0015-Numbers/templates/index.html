@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Numbers</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            setInterval(function() {
+                $.getJSON('/numbers', function(data) {
+                    $('#numbers').empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $('#numbers').append(data[i] + '<br>');
+                    }
+                });
+            }, 1000);
+        });
+    </script>
+</head>
+<body>
+    <h1>Numbers:</h1>
+    <div id="numbers"></div>
+</body>
+</html>

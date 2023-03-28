@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Flask App</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!--      ################ IT ADDS LINKS TO EACH OTHER AND THEN COPIES THEM AGAIN AND AGAIN AND AGAIN
+      <script>
+        $(document).ready(function() {
+          setInterval(function() {
+            $.get('/get_link', function(data) {
+              $.each(data.links, function(index, link) {
+                $('<a>').text(link).attr('href', link).appendTo('#links');
+                $('<br>').appendTo('#links');
+              });
+            });
+          }, 1000);
+        });
+      </script>
+-->
+
+<!-- ### ONE LINK AT A TIME -->
+    <script>
+      $(document).ready(function() {
+        setInterval(function() {
+          $.get('/get_link', function(data) {
+            var linksHTML = '';
+            $.each(data.links, function(index, link) {
+              if (link !== "" && link !== null) {
+                linksHTML += '<a href="' + link + '">' + link + '</a><br>';
+              }
+            });
+            $('#links').html(linksHTML);
+          });
+        }, 1000);
+      });
+    </script>
+
+    
+    
+  </head>
+  <body>
+    <h1>Flask App</h1>
+    <div id="links"></div>
+  </body>
+</html>

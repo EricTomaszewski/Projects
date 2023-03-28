@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Flask App</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        setInterval(function() {
+          $.get('/get_numbers', function(data) {
+            var numbers = data.numbers;
+            $('#numbers').empty();
+            for (var i = 0; i < numbers.length; i++) {
+              var number = numbers[i];
+              var $div = $('<div>').text(number);
+              $('#numbers').append($div);
+            }
+          });
+        }, 1000);
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Flask App</h1>
+    <div id="numbers"></div>
+  </body>
+</html>

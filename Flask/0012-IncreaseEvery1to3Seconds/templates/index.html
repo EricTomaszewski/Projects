@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Flask App</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        setInterval(function() {
+          $.get('/get_number', function(data) {
+            $('#number').text(data.number);
+          });
+        }, 1000);
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Flask App</h1>
+    <div id="number">{{ number }}</div>
+  </body>
+</html>
