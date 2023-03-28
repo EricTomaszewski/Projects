@@ -3,6 +3,8 @@
   <head>
     <title>Flask App</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
 <!--      ################ IT ADDS LINKS TO EACH OTHER AND THEN COPIES THEM AGAIN AND AGAIN AND AGAIN
       <script>
@@ -22,7 +24,7 @@
 <!-- ### ONE LINK AT A TIME -->
     <script>
       $(document).ready(function() {
-        setInterval(function() {
+        var linksInterval = setInterval(function() {
           $.get('/get_link', function(data) {
             var linksHTML = '';
             $.each(data.links, function(index, link) {
@@ -33,14 +35,29 @@
             $('#links').html(linksHTML);
           });
         }, 1000);
+
+        $('#save-to-xls').on('click', function() {
+          clearInterval(linksInterval);
+
+          var links = [];
+          $('#links a').each(function() {
+            links.push([$(this).text(), $(this).attr('href')]);
+          });
+
+          var worksheet = XLSX.utils.aoa_to_sheet(links);
+          var workbook = XLSX.utils.book_new();
+          XLSX.utils.book_append_sheet(workbook, worksheet, 'Links');
+          var now = new Date();
+          var filename = 'links_' + now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + '.xlsx';
+          XLSX.writeFile(workbook, filename);
+        });
       });
     </script>
 
-    
-    
   </head>
   <body>
-    <h1>Flask App</h1>
+    <h1>Provide elements of the list one by one. Save in XLS when clicked & stop execution</h1>
+    <button id="save-to-xls">Save to XLS</button><br><br>
     <div id="links"></div>
   </body>
 </html>
