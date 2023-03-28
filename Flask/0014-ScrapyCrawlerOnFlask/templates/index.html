@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spider</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <button id="start-button">Start Spider</button>
+    <div id="urls"></div>
+
+    <script>
+        $(document).ready(function() {
+            $("#start-button").click(function() {
+                $.get("/start_spider");
+            });
+
+            setInterval(function() {
+                $.getJSON("/get_urls", function(data) {
+                    $("#urls").empty();
+                    data.forEach(function(url) {
+                        $("#urls").append(`<a href="${url}">${url}</a><br>`);
+                    });
+                });
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
