@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Video Downloader</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $("#download-form").submit(function(event) {
+          // Prevent the form from submitting and reloading the page
+          event.preventDefault();
+          // Send the form data as an AJAX request to the Flask server
+          $.ajax({
+            url: "/download",
+            method: "POST",
+            data: $(this).serialize(),
+            success: function(result) {
+              // Update the result div with the server response
+              $("#result").html(result);
+            }
+          });
+        });
+      });
+    </script>    
+  </head>
+  <body>
+    <h1>Video Downloader</h1>
+    <form id="download-form">
+    <!-- previous code <form action="/download" method="post"> -->
+      <label for="VideoLink">Paste the video link to download the video:</label>
+      <input type="text" name="VideoLink" required>
+      <br>
+      <input type="submit" value="Download Video">
+    </form>
+    <br>
+    <div id="result"></div>
+  </body>
+</html>
