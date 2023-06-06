@@ -1,9 +1,13 @@
 # people.py
 
-from datetime import datetime
+# Remove: from datetime import datetime
 from flask import abort, make_response
 
-def get_timestamp():
+from config import db
+from models import Person, people_schema, person_schema
+
+# REMOVE: get_timestamp() & PEOPLE
+'''def get_timestamp():
     return datetime.now().strftime(("%Y-%m-%d %H:%M:%S"))
 
 PEOPLE = {
@@ -24,10 +28,12 @@ PEOPLE = {
         "lname": "Bunny",
         "timestamp": get_timestamp(),
     },
-}
+}'''
 
 def read_all():
-    return list(PEOPLE.values())
+    # return list(PEOPLE.values())
+    people = Person.query.all()
+    return people_schema.dump(people)
 
 def create(person):
     lname = person.get("lname")
@@ -47,12 +53,22 @@ def create(person):
         )
 
 def read_one(lname):
-    if lname in PEOPLE:
+    person = Person.query.filter(Person.lname == lname).one_or_none()
+    
+    if person is not None:
+        return person_schema.dump(person)
+    else:
+        abort(404, f"Person with last name {lname} not found")
+# previous code without SQL
+'''   if lname in PEOPLE:
         return PEOPLE[lname]
     else:
         abort(
             404, f"Person with last name {lname} not found"
-        )
+        )'''
+
+    
+    
 
 def update(lname, person):
     if lname in PEOPLE:
