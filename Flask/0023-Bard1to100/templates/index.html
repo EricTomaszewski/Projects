@@ -1,0 +1,28 @@
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Counting Numbers</title>
+</head>
+<body>
+<h1>Counting Numbers</h1>
+<ul id="numbers"></ul>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+  setInterval(function() {
+    $.ajax({
+      url: "/count",
+      type: "POST",
+      success: function(data) {
+        $("#numbers").append("<li>" + data + "</li>");
+      }
+    });
+  }, 1000);
+});
+</script>
+</body>
+</html>
+
