@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Values</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+<!--
+     <script>
+       $(document).ready(function() {
+        $.ajax({
+            type: 'GET',
+            url: '/values',
+            success: function(response) {
+                $('#output').append(response);
+            },
+            complete: function(response) {
+                setTimeout(function() {
+                    window.location.reload(true);
+                }, 1000);
+            }
+        });
+      });
+        $(document).ready(function() {
+          function updateValues() {
+              $.ajax({
+                  type: 'GET',
+                  url: '/values',
+                  success: function(response) {
+                      $('#output').append(response);
+                  },
+                  complete: function(response) {
+                      setTimeout(updateValues, 1000);
+                  }
+              });
+          }
+
+          updateValues();
+    </script>
+-->
+
+<!--
+<script>
+  $(document).ready(function() {
+    function getUpdates() {
+        $.ajax({
+            url: '/values',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                $('#output').append('<p>' + data.output + '</p>');
+                setTimeout(getUpdates, 1000); // Fetch updates every 1 second
+            }
+        });
+    }
+    getUpdates();
+});
+</script>
+-->
+
+
+    <script>
+      $(document).ready(function() {
+          function getUpdates() {
+              $.ajax({
+                  url: '/values',
+                  type: 'GET',
+                  dataType: 'json',
+                  success: function(data) {
+                      var newOutput = '<span>' + data.output + '</span>'; // Create the new output
+                      $('#output').append(newOutput); // Append the new output to the existing one
+                      setTimeout(getUpdates, 1000); // Fetch updates every 1 second
+                  }
+              });
+          }
+          getUpdates();
+      });
+    </script>
+    <style>
+      span {
+          display: block;
+          white-space: nowrap;
+      }
+    </style>
+</head>
+<body>
+    <h1>Random Values:</h1>
+    <div id="output"></div>
+</body>
+</html>

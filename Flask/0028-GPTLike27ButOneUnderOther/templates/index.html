@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script>
+       $(document).ready(function() {
+           function getUpdates() {
+               $.ajax({
+                   url: '/get_updates',
+                   type: 'GET',
+                   dataType: 'json',
+                   success: function(data) {
+                       $('#output').append('<p>' + data.output + '</p>');
+                       setTimeout(getUpdates, 1000); // Fetch updates every 1 second
+                   }
+               });
+           }
+           getUpdates();
+       });
+   </script>
+</head>
+<body>
+   <div id="output"></div>
+</body>
+</html>

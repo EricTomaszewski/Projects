@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Number Counter</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      var intervalId = null;
+
+      $('#submit').click(function() {
+        var number = $('#number').val();
+        $.ajax({
+          type: 'POST',
+          url: '/update',
+          data: {'number': number},
+          success: function(data) {
+            console.log('Number updated successfully');
+            clearInterval(intervalId);
+            intervalId = setInterval(getNumber, 1000);
+          }
+        });
+      });
+
+      function getNumber() {
+        $.ajax({
+          type: 'GET',
+          url: '/get_number',
+          success: function(data) {
+            var number = data['number'];
+            if (number >= 0) {
+              $('#display').append(number + '<br>');
+              if (number >= 99) {
+                clearInterval(intervalId);
+              }
+            } else {
+              $('#display').append('Error: ' + data['error'] + '<br>');
+            }
+          },
+          error: function(data) {
+            $('#display').append('Error: Could not get number<br>');
+            clearInterval(intervalId);
+          }
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <h1>Number Counter</h1>
+  <form>
+    <label>Enter a number:</label>
+    <input type="number" id="number" name="number">
+    <button type="button" id="submit">Start</button>
+  </form>
+  <div id="display"></div>
+</body>
+</html>
