@@ -1,0 +1,12 @@
+ Volume in drive C is Acer
+ Volume Serial Number is 4847-C697
+
+ Directory of C:\Users\irene\!PROJECTS\Subprocess\1001-various
+
+10/11/2023  23:16    <DIR>          .
+10/11/2023  22:40    <DIR>          ..
+10/11/2023  23:24                 0 output.txt
+10/11/2023  23:24             4,083 subpro.py
+10/11/2023  23:12                35 text.txt
+               3 File(s)          4,118 bytes
+               2 Dir(s)  259,065,249,792 bytes free
