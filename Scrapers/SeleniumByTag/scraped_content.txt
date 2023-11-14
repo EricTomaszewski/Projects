@@ -1,0 +1,16 @@
+The Assistants API allows you to build AI assistants within your own applications. An Assistant has instructions and can leverage models, tools, and knowledge to respond to user queries. The Assistants API currently supports three types of tools: Code Interpreter, Retrieval, and Function calling. In the future, we plan to release more OpenAI-built tools, and allow you to provide your own tools on our platform.
+You can explore the capabilities of the Assistants API using the Assistants playground or by building a step-by-step integration outlined in this guide. At a high level, a typical integration of the Assistants API has the following flow:
+This starter guide walks through the key steps to create and run an Assistant that uses Code Interpreter.
+In addition to the Assistants API, we also provide an Assistants playground (sign in required). The playground is a great way to explore the capabilities of the Assistants API and learn how to build your own Assistant without writing any code.
+An Assistant represents an entity that can be configured to respond to users’ Messages using several parameters like:
+In this example, we're [creating an Assistant[(/docs/api-reference/assistants/createAssistant)] that is a personal math tutor, with the Code Interpreter tool enabled:
+A Thread represents a conversation. We recommend creating one Thread per user as soon as the user initiates the conversation. Pass any user-specific context and files in this thread by creating Messages.
+Threads don’t have a size limit. You can pass as many Messages as you want to a Thread. The API will ensure that requests to the model fit within the maximum context window, using relevant optimization techniques such as truncation.
+A Message contains text, and optionally any files that you allow the user to upload. Messages need to be added to a specific Thread. Adding images via message objects like in Chat Completions using GPT-4 with Vision is not supported today, but we plan to add support for them in the coming months. You can still upload images and have them processes via retrieval.
+Now if you list Messages in Thread, you will see that this message is added to the thread on creation:
+For the Assistant to respond to the user message, you need to create a Run. This makes the Assistant read the Thread and decide whether to call tools (if they are enabled) or simply use the model to best answer the query. As the run progresses, the assistant appends Messages to the thread with the role="assistant".
+You can optionally pass additional instructions to the Assistant while creating the Run but note that these instructions override the default instructions of the Assistant:
+This creates a Run in a queued status. You can periodically retrieve the Run to check on its status to see if it has moved to completed.
+Once the Run completes, you can list the Messages added by the Assistant to the Thread.
+And finally, display them to the user! During this Run, the Assistant added two new Messages to the Thread. Here is an example of what that might look like:
+You can also retrieve the Run Steps of this Run if you'd like to explore or display the inner workings of the Assistant and its tools.
